@@ -7,13 +7,13 @@ import (
 	"testing"
 )
 
-type TestData struct {
+type SortTestData struct {
 	Source     []int
 	SourceOrig []int
 	Expected   []int
 }
 
-var manualData = []TestData{
+var manualData = []SortTestData{
 	{
 		Source:     []int{3, 2, 1, 4},
 		SourceOrig: []int{3, 2, 1, 4},
@@ -26,32 +26,32 @@ var manualData = []TestData{
 	},
 }
 
-func genTest(tests int, minSize, maxSize int, minValue, maxValue int) []TestData {
-	results := make([]TestData, tests)
+func genSortTest(tests int, minSize, maxSize int, minValue, maxValue int) []SortTestData {
+	results := make([]SortTestData, tests)
 	for i := range results {
-		results[i] = genTestData(util.RandomRange(minSize, maxSize), minValue, maxValue)
+		results[i] = genSortTestData(util.RandomRange(minSize, maxSize), minValue, maxValue)
 	}
 	return results
 }
 
-func genTestData(n int, min, max int) TestData {
+func genSortTestData(n int, min, max int) SortTestData {
 	source := util.GenIntSeries(n, min, max)
 	sourceOrig := util.ArrayCopy(source)
 	expected := util.ArrayCopy(source)
 
 	sort.Ints(expected)
 
-	return TestData{
+	return SortTestData{
 		Source:     source,
 		SourceOrig: sourceOrig,
 		Expected:   expected,
 	}
 }
 
-var genData = genTest(50, 100, 10_000, -1000, 1000)
+var genData = genSortTest(50, 100, 10_000, -1000, 1000)
 var testData = append(manualData, genData...)
 
-var benchData = genTest(2000, 25_000, 50_000, -100_000, 100_000)
+var benchData = genSortTest(2000, 25_000, 50_000, -100_000, 100_000)
 var benchCounter uint64 = 0
 
 func testSort(t *testing.T, sort func([]int) []int) {
