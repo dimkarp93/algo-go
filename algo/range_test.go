@@ -151,7 +151,7 @@ func doBenchmark(makeRange func([]int) Range) {
 
 func genBenchRangeTests() []RangeTestData {
 	if len(benchData) == 0 {
-		benchRangeTestData = genRangeTests(100, 100, 1000, 10, 100)
+		benchRangeTestData = genRangeTests(1_000, 1_000, 10_000, 100, 1_000)
 	}
 
 	return benchRangeTestData
